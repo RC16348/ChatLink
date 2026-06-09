@@ -61,5 +61,8 @@ venv/
 *.rar
 *.7z
 
+# Screenshots
+screen/
+
 # User-specific configuration (uncomment if needed)
 # chatlink.config.json
