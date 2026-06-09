@@ -148,8 +148,8 @@ npm run dev
 npm run build:win
 
 # 构建 macOS DMG
-npm run build:mac          # Intel x64
-npm run build:mac-arm      # Apple Silicon
+npm run build:mac          # Apple Silicon (arm64)
+npm run build:mac-arm      # Apple Silicon (arm64)
 
 # 构建 Linux 安装包（AppImage + deb + tar.gz）
 npm run build:linux
@@ -257,7 +257,7 @@ src/
 │       ├── pages/      # 页面组件
 │       ├── components/ # UI 组件
 │       ├── stores/     # Zustand 状态管理
-│       └── i18n/       # 国际化（中文）
+│       └── i18n/       # 国际化（中文/英文）
 └── shared/             # 共享类型和工具
 ```
 
