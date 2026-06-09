@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+out/
+
+# IDE and editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Electron-builder artifacts
+release/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Cache
+.eslintcache
+.tsbuildinfo
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# User-specific configuration (uncomment if needed)
+# chatlink.config.json
