@@ -19,12 +19,11 @@ ChatLink 是一个基于 Electron 的桌面应用程序，提供**统一的 AI A
 | 👥 **多账号管理** | 每个提供商可配置多个账号，支持日配额限制 |
 | ⚖️ **负载均衡** | 3 种策略：轮询（RR）、填充优先（FF）、故障转移（FO） |
 | 🗺️ **模型映射** | 请求模型名到实际模型名的灵活映射，支持全局和每提供商配置 |
-| 🔑 **API Key 鉴权** | 内置 API Key 管理，保护代理不被未授权访问 |
 | 📡 **流式/非流式** | 完整支持 SSE 流式响应和非流式调用 |
 | 💬 **内置聊天界面** | 应用内自带聊天测试页面，模型列表自动同步本地代理 API |
 | 📊 **请求日志** | 完整记录请求/响应日志，含延迟、模型、账号等详细信息 |
 | 📈 **请求统计** | 代理状态页展示总请求数、成功率、失败数、平均延迟等统计指标 |
-| 🛠️ **管理 API** | 提供管理接口，支持远程管理提供商、账号、API Key、模型映射、会话等 |
+| 🛠️ **管理 API** | 提供管理接口，支持远程管理提供商、账号、模型映射、会话等 |
 | 📋 **系统托盘** | 最小化到托盘，托盘内快捷操作窗口 |
 | 🔄 **自动更新** | 基于 GitHub Releases 的自动更新（electron-updater） |
 | 🌓 **暗色模式** | 支持亮色/暗色/跟随系统三种主题 |
@@ -108,14 +107,13 @@ ChatLink 是一个基于 Electron 的桌面应用程序，提供**统一的 AI A
 ### 请求流程
 
 1. 外部客户端发送 OpenAI 格式请求 → **ProxyServer** (Koa, 默认端口 8080，可自定义)
-2. API Key 鉴权中间件检查（可选）
-3. 请求路由到 `POST /v1/chat/completions`
-4. **ModelMapper** 解析模型映射
-5. **LoadBalancer** 根据策略选择账号/提供商
-6. **RequestForwarder** 调用对应 **Adapter** 进行格式转换
-7. Adapter 转发到实际 AI API
-8. 响应转回 OpenAI 兼容格式返回给客户端
-9. 全程记录请求日志和统计数据
+2. 请求路由到 `POST /v1/chat/completions`
+3. **ModelMapper** 解析模型映射
+4. **LoadBalancer** 根据策略选择账号/提供商
+5. **RequestForwarder** 调用对应 **Adapter** 进行格式转换
+6. Adapter 转发到实际 AI API
+7. 响应转回 OpenAI 兼容格式返回给客户端
+8. 全程记录请求日志和统计数据
 
 ---
 
@@ -200,7 +198,6 @@ curl http://localhost:8080/v1/models
 # 流式聊天
 curl http://localhost:8080/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer sk-your-api-key" \
   -d '{
     "model": "glm-5",
     "messages": [{"role": "user", "content": "你好"}],
@@ -230,7 +227,7 @@ curl http://localhost:8080/v1/chat/completions \
 | `/v1/messages` | POST | Anthropic Messages API 兼容 |
 | `/health` | GET | 健康检查 |
 | `/stats` | GET | 代理运行统计 |
-| `/v0/management/*` | GET/POST/PUT/DELETE | 管理 API（需管理密钥，含提供商、账号、API Key、模型映射、会话管理、代理控制等） |
+| `/v0/management/*` | GET/POST/PUT/DELETE | 管理 API（需管理密钥，含提供商、账号、模型映射、会话管理、代理控制等） |
 
 ---
 
