@@ -5,7 +5,7 @@
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.2.0-brightgreen)](package.json)
 
-ChatLink 是一个基于 Electron 的桌面应用程序，提供**统一的 AI API 聚合代理**功能。它将多个 AI 服务提供商（智谱 GLM、Kimi、通义千问、MiniMax、Mimo、Perplexity、Z.ai 等）聚合为一个 OpenAI 兼容的 API 端点，支持多账号负载均衡、模型映射、OAuth 登录、请求日志与统计分析。
+ChatLink 是一个基于 Electron 的桌面应用程序，提供**统一的 AI API 聚合代理**功能。它将多个 AI 服务提供商（智谱 GLM、Kimi、通义千问、MiniMax、Mimo、豆包、Perplexity、Z.ai 等）聚合为一个 OpenAI 兼容的 API 端点，支持多账号负载均衡、模型映射、OAuth 登录、请求日志与统计。
 
 ---
 
@@ -14,19 +14,19 @@ ChatLink 是一个基于 Electron 的桌面应用程序，提供**统一的 AI A
 | 功能 | 描述 |
 |------|------|
 | 🔄 **OpenAI 兼容代理** | 提供标准 `/v1/chat/completions`、`/v1/models` 等 API 端点，无缝替换 OpenAI SDK |
-| 🌐 **多平台 AI 聚合** | 内置支持 8+ 个 AI 平台，支持自定义 OpenAI 兼容提供商扩展 |
+| 🌐 **多平台 AI 聚合** | 内置支持 10 个 AI 平台，支持自定义 OpenAI 兼容提供商扩展 |
 | 🔐 **OAuth / Token 登录** | 支持浏览器 OAuth 登录和内置 WebView 登录获取各平台凭据 |
 | 👥 **多账号管理** | 每个提供商可配置多个账号，支持日配额限制 |
-| ⚖️ **负载均衡** | 3 种策略：轮询、填充优先、故障转移 |
+| ⚖️ **负载均衡** | 3 种策略：轮询（RR）、填充优先（FF）、故障转移（FO） |
 | 🗺️ **模型映射** | 请求模型名到实际模型名的灵活映射，支持全局和每提供商配置 |
 | 🔑 **API Key 鉴权** | 内置 API Key 管理，保护代理不被未授权访问 |
 | 📡 **流式/非流式** | 完整支持 SSE 流式响应和非流式调用 |
 | 💬 **内置聊天界面** | 应用内自带聊天测试页面，模型列表自动同步本地代理 API |
 | 📊 **请求日志** | 完整记录请求/响应日志，含延迟、模型、账号等详细信息 |
-| 📈 **统计面板** | 请求量、成功率、延迟、模型/提供商/账号使用分布图表 |
-| 🛠️ **管理 API** | 提供管理接口，支持远程管理提供商、账号、配置 |
+| 📈 **请求统计** | 代理状态页展示总请求数、成功率、失败数、平均延迟等统计指标 |
+| 🛠️ **管理 API** | 提供管理接口，支持远程管理提供商、账号、API Key、模型映射、会话等 |
 | 📋 **系统托盘** | 最小化到托盘，托盘内快捷操作窗口 |
-| 🔄 **自动更新** | 基于 GitHub Releases 的自动更新 |
+| 🔄 **自动更新** | 基于 GitHub Releases 的自动更新（electron-updater） |
 | 🌓 **暗色模式** | 支持亮色/暗色/跟随系统三种主题 |
 | 🔧 **Tool Calling** | 支持 function calling，含 prompt-based 和 Anthropic 格式转换 |
 | 💾 **会话管理** | 会话超时、消息数限制、过期自动清理、上下文管理策略 |
@@ -45,7 +45,6 @@ ChatLink 是一个基于 Electron 的桌面应用程序，提供**统一的 AI A
 | 🌐 **后端/代理** | Koa 2 + @koa/router |
 | 📦 **持久存储** | electron-store + safeStorage (凭证加密存储) |
 | 🔄 **自动更新** | electron-updater |
-| 📊 **图表** | Recharts |
 | 🔨 **构建工具** | electron-vite + electron-builder |
 
 ---
@@ -58,11 +57,12 @@ ChatLink 是一个基于 Electron 的桌面应用程序，提供**统一的 AI A
 | 月之暗面 Kimi | `kimi` | ✅ |
 | MiniMax | `minimax` | ✅ |
 | Mimo | `mimo` | ✅ |
+| 豆包 (Doubao) | `doubao` | ✅ |
 | Perplexity | `perplexity` | ✅ |
 | 通义千问 (Qwen) | `qwen` | ✅ |
 | 通义千问 AI | `qwen-ai` | ✅ |
 | Z.ai | `zai` | ✅ |
-| 自定义 OpenAI 兼容 | `custom` | ✅ (Token / Cookie / JWT 等) |
+| 自定义 OpenAI 兼容 | `custom` | ⚠️ (Token / Cookie / JWT 等) |
 
 ---
 
@@ -99,7 +99,7 @@ ChatLink 是一个基于 Electron 的桌面应用程序，提供**统一的 AI A
 │  │ │ Kimi          │ │     │  ...                 │     │
 │  │ │ Qwen          │ │     └──────────────────────┘     │
 │  │ │ Zai           │ │                                   │
-│  │ │ Custom        │ │                                   │
+│  │ │ Doubao        │ │                                   │
 │  │ └───────────────┘ │                                   │
 │  └───────────────────┘                                   │
 └──────────────────────────────────────────────────────────┘
@@ -215,7 +215,7 @@ curl http://localhost:8080/v1/chat/completions \
 ### 6. 查看日志和统计
 
 - **日志**页面：查看所有 API 请求的详细日志（延迟、模型、账号等）
-- **统计面板**：查看请求量、成功率、延迟分布等统计图表
+- **代理状态**页面：查看总请求数、成功率、失败数、平均延迟等统计指标
 
 ---
 
@@ -224,10 +224,13 @@ curl http://localhost:8080/v1/chat/completions \
 | 端点 | 方法 | 说明 |
 |------|------|------|
 | `/v1/models` | GET | 获取可用模型列表 |
+| `/v1/models/:model` | GET | 获取单个模型详情 |
 | `/v1/chat/completions` | POST | 聊天补全（支持流式/非流式） |
 | `/v1/completions` | POST | 文本补全 |
-| `/v0/health` | GET | 健康检查 |
-| `/v0/management/*` | POST | 管理 API（需管理密钥） |
+| `/v1/messages` | POST | Anthropic Messages API 兼容 |
+| `/health` | GET | 健康检查 |
+| `/stats` | GET | 代理运行统计 |
+| `/v0/management/*` | GET/POST/PUT/DELETE | 管理 API（需管理密钥，含提供商、账号、API Key、模型映射、会话管理、代理控制等） |
 
 ---
 
