@@ -257,7 +257,7 @@ src/
 │       ├── pages/      # 页面组件
 │       ├── components/ # UI 组件
 │       ├── stores/     # Zustand 状态管理
-│       └── i18n/       # 国际化（中文/英文）
+│       └── i18n/       # 国际化（中文）
 └── shared/             # 共享类型和工具
 ```
 

@@ -158,7 +158,7 @@ export class ProxyServer {
     this.router.get('/', async (ctx) => {
       ctx.body = {
         name: 'ChatLink Proxy',
-        version: '1.2.0',
+        version: '1.1.2',
         description: 'OpenAI API compatible proxy service',
         endpoints: [
           'POST /v1/chat/completions',
